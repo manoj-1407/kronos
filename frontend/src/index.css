@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Root variables ────────────────────────────────────────────────────────── */
+:root {
+  --void:       #070b14;
+  --panel:      #0d1424;
+  --card:       #111827;
+  --border:     #1e2d47;
+  --dim:        #1a2540;
+  --cyan:       #00e5ff;
+  --amber:      #ffb300;
+  --rose:       #ff4757;
+  --emerald:    #00e676;
+  --violet:     #7c3aed;
+  --text-1:     #e2eaf8;
+  --text-2:     #8899bb;
+  --text-3:     #4a5c7a;
+  font-synthesis: none;
+}
+
+.light {
+  --void:   #f0f4ff;
+  --panel:  #e8edf8;
+  --card:   #ffffff;
+  --border: #c5d0e8;
+  --dim:    #d8e0f0;
+  --text-1: #111827;
+  --text-2: #4a5c7a;
+  --text-3: #8899bb;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Chakra Petch', monospace;
+  background: var(--void);
+  color: var(--text-1);
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--panel); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+/* ── Typography ─────────────────────────────────────────────────────────────── */
+.font-display { font-family: 'Chakra Petch', monospace; }
+.font-mono    { font-family: 'Space Mono', monospace; }
+
+/* ── Glow effects ───────────────────────────────────────────────────────────── */
+.glow-cyan   { text-shadow: 0 0 12px rgba(0,229,255,0.8); }
+.glow-amber  { text-shadow: 0 0 12px rgba(255,179,0,0.8); }
+.glow-rose   { text-shadow: 0 0 12px rgba(255,71,87,0.8); }
+.glow-emerald{ text-shadow: 0 0 12px rgba(0,230,118,0.8); }
+
+.box-glow-cyan   { box-shadow: 0 0 0 1px rgba(0,229,255,0.3), 0 0 20px rgba(0,229,255,0.1); }
+.box-glow-amber  { box-shadow: 0 0 0 1px rgba(255,179,0,0.3),  0 0 20px rgba(255,179,0,0.1);  }
+.box-glow-rose   { box-shadow: 0 0 0 1px rgba(255,71,87,0.3),  0 0 20px rgba(255,71,87,0.1);  }
+.box-glow-emerald{ box-shadow: 0 0 0 1px rgba(0,230,118,0.3),  0 0 20px rgba(0,230,118,0.1);  }
+
+/* ── Scan line animation ─────────────────────────────────────────────────────── */
+.scan-line-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.scan-line-overlay::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.15), transparent);
+  animation: scanLine 6s linear infinite;
+  pointer-events: none;
+}
+@keyframes scanLine {
+  0%   { top: -1px; }
+  100% { top: 100%; }
+}
+
+/* ── Grid texture ────────────────────────────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(30,45,71,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,45,71,0.3) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Corner brackets (OS HUD aesthetic) ─────────────────────────────────────── */
+.bracket {
+  position: relative;
+}
+.bracket::before, .bracket::after {
+  content: '';
+  position: absolute;
+  width: 10px; height: 10px;
+}
+.bracket::before {
+  top: 0; left: 0;
+  border-top: 1px solid var(--cyan);
+  border-left: 1px solid var(--cyan);
+}
+.bracket::after {
+  bottom: 0; right: 0;
+  border-bottom: 1px solid var(--cyan);
+  border-right: 1px solid var(--cyan);
+}
+
+/* ── Code viewer ─────────────────────────────────────────────────────────────── */
+.code-block {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  tab-size: 4;
+}
+
+/* ── Highlight.js overrides ──────────────────────────────────────────────────── */
+.hljs {
+  background: transparent !important;
+  padding: 0 !important;
+  font-family: 'Space Mono', monospace !important;
+  font-size: 0.75rem !important;
+}
+.hljs-keyword  { color: #00e5ff !important; }
+.hljs-type     { color: #ffb300 !important; }
+.hljs-number   { color: #00e676 !important; }
+.hljs-string   { color: #ff4757 !important; }
+.hljs-comment  { color: #4a5c7a !important; font-style: italic; }
+.hljs-function { color: #e2eaf8 !important; }
+.hljs-built_in { color: #7c3aed !important; }
+
+/* ── Recharts overrides ──────────────────────────────────────────────────────── */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--panel) !important;
+  border-color: var(--border) !important;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+}
+.recharts-cartesian-grid line { stroke: var(--border) !important; }
+
+/* ── Pulse dot ───────────────────────────────────────────────────────────────── */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.8); }
+}
+.pulse-dot { animation: pulseDot 1.5s ease-in-out infinite; }
+
+/* ── Slide-in animation ──────────────────────────────────────────────────────── */
+@keyframes slideInRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+.slide-in { animation: slideInRight 0.3s ease-out forwards; }
+
+/* ── Input base ──────────────────────────────────────────────────────────────── */
+.kronos-input {
+  background: var(--dim);
+  border: 1px solid var(--border);
+  color: var(--text-1);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  padding: 6px 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.kronos-input:focus {
+  outline: none;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 2px rgba(0,229,255,0.15);
+}
+.kronos-input::placeholder { color: var(--text-3); }
+
+/* ── Button base ─────────────────────────────────────────────────────────────── */
+.btn {
+  font-family: 'Chakra Petch', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-cyan {
+  background: rgba(0,229,255,0.1);
+  color: var(--cyan);
+  border: 1px solid rgba(0,229,255,0.3);
+}
+.btn-cyan:hover:not(:disabled) {
+  background: rgba(0,229,255,0.2);
+  box-shadow: 0 0 16px rgba(0,229,255,0.2);
+}
+
+.btn-amber {
+  background: rgba(255,179,0,0.1);
+  color: var(--amber);
+  border: 1px solid rgba(255,179,0,0.3);
+}
+.btn-amber:hover:not(:disabled) {
+  background: rgba(255,179,0,0.2);
+}
+
+.btn-rose {
+  background: rgba(255,71,87,0.1);
+  color: var(--rose);
+  border: 1px solid rgba(255,71,87,0.3);
+}
+.btn-rose:hover:not(:disabled) {
+  background: rgba(255,71,87,0.2);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--dim);
+  color: var(--text-1);
+}
+
+/* ── Card base ───────────────────────────────────────────────────────────────── */
+.kronos-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* ── Status badge ────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 2px;
+}
+.badge-cyan    { background: rgba(0,229,255,0.1); color: var(--cyan); border: 1px solid rgba(0,229,255,0.2); }
+.badge-amber   { background: rgba(255,179,0,0.1); color: var(--amber); border: 1px solid rgba(255,179,0,0.2); }
+.badge-rose    { background: rgba(255,71,87,0.1); color: var(--rose); border: 1px solid rgba(255,71,87,0.2); }
+.badge-emerald { background: rgba(0,230,118,0.1); color: var(--emerald); border: 1px solid rgba(0,230,118,0.2); }
+.badge-violet  { background: rgba(124,58,237,0.1); color: #a78bfa; border: 1px solid rgba(124,58,237,0.2); }

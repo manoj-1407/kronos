@@ -1,0 +1,25 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import Layout from './components/Layout';
+import Dashboard from './pages/Dashboard';
+import CPUPage from './pages/CPUPage';
+import MemoryPage from './pages/MemoryPage';
+import DiskPage from './pages/DiskPage';
+import DeadlockPage from './pages/DeadlockPage';
+import HistoryPage from './pages/HistoryPage';
+import { useStore } from './store';
+export default function App() {
+    const theme = useStore(s => s.theme);
+    useEffect(() => {
+        document.documentElement.classList.toggle('light', theme === 'light');
+    }, [theme]);
+    // System preference detection on first load
+    useEffect(() => {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        if (!localStorage.getItem('kronos-state')) {
+            useStore.getState().setTheme(mq.matches ? 'dark' : 'light');
+        }
+    }, []);
+    return (_jsx(BrowserRouter, { children: _jsx(Routes, { children: _jsxs(Route, { path: "/", element: _jsx(Layout, {}), children: [_jsx(Route, { index: true, element: _jsx(Dashboard, {}) }), _jsx(Route, { path: "cpu", element: _jsx(CPUPage, {}) }), _jsx(Route, { path: "memory", element: _jsx(MemoryPage, {}) }), _jsx(Route, { path: "disk", element: _jsx(DiskPage, {}) }), _jsx(Route, { path: "deadlock", element: _jsx(DeadlockPage, {}) }), _jsx(Route, { path: "history", element: _jsx(HistoryPage, {}) }), _jsx(Route, { path: "*", element: _jsx(Navigate, { to: "/", replace: true }) })] }) }) }));
+}
