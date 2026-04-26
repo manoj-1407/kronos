@@ -1,36 +1,61 @@
-# Kronos
+# Kronos - Operating Systems Simulation Studio
 
-Kronos is an operating-systems simulation lab that makes algorithm behavior visible, measurable, and explainable.
+[![Backend Tests](https://img.shields.io/badge/backend-pytest-success)](./backend/tests)
+[![Frontend Build](https://img.shields.io/badge/frontend-vite%20build-646CFF)](./frontend)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Stack: FastAPI + React](https://img.shields.io/badge/stack-FastAPI%20%2B%20React-0ea5e9)](#tech-stack)
 
-It is built for learners, interview prep, and systems classes where "just reading formulas" is not enough. You can run classic CPU, memory, disk, and deadlock simulations, inspect step-by-step state transitions, compare runs, and export results.
+Kronos is a visual simulation studio for core operating-systems algorithms.  
+Instead of static textbook examples, Kronos lets you execute workloads, watch each state transition, compare outcomes across algorithms, and generate explainable insights.
 
-## Highlights
+Built for students, educators, and engineers who want practical intuition for scheduling, memory behavior, disk movement, and deadlock safety.
 
-- Real-time simulation for CPU scheduling, memory paging, disk head movement, and deadlock safety analysis.
-- History workspace with replay, run comparison, generated insights, CSV export, and reusable scenario presets.
-- Practical UI focused on signal over noise: metrics first, playback controls, and clear category workflows.
-- Fast local setup for Windows and Docker-based full-stack run mode.
+## Why Kronos feels different
+
+- Clear simulation-first interface with step-by-step playback.
+- Same input, multiple algorithms, side-by-side decisions.
+- Performance metrics + plain-language insights for each run.
+- Scenario presets for repeatable experiments.
+- Export-ready history for reports and assignments.
+
+## Feature Set
+
+### Simulation modules
+
+- CPU scheduling: FCFS, SJF, SRTF, Round Robin, Priority (NP/P), MLFQ
+- Memory paging: FIFO, LRU, Optimal, LFU, Clock
+- Disk scheduling: FCFS, SSTF, SCAN, C-SCAN, LOOK, C-LOOK
+- Deadlock analysis: Banker's safety and request checks
+
+### Analysis workspace
+
+- Run history with replayable input/output snapshots
+- Multi-run comparison workspace
+- Auto-generated run insights
+- CSV export for reports
+- Scenario presets (save and reuse workloads)
 
 ## Tech Stack
 
 - Frontend: React, TypeScript, Vite, Tailwind
 - Backend: FastAPI, SQLModel, Uvicorn
-- Data: SQLite by default (`DATABASE_URL` supported for Postgres or other engines)
-- CI/CD: GitHub Actions + GitHub Pages for frontend deployment
+- Data: SQLite by default, `DATABASE_URL` override supported
+- CI: GitHub Actions (backend test + frontend build + optional Pages deploy)
 
-## Quick Start (Windows)
+## Quick Start
+
+### One command (Windows)
 
 ```powershell
 .\setup.ps1
 ```
 
-This installs dependencies, runs backend tests, starts backend + frontend in separate terminals, and opens the browser.
+This bootstraps dependencies, runs backend tests, and starts both services.
 
-## Manual Local Run
-
-### Backend
+### Manual local run
 
 ```powershell
+# backend
 cd backend
 python -m venv venv
 venv\Scripts\activate
@@ -38,45 +63,45 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-### Frontend
-
 ```powershell
+# frontend
 cd frontend
 npm install
 npm run dev
 ```
 
-- UI: `http://localhost:5173`
+- Frontend: `http://localhost:5173`
 - API: `http://localhost:8000`
-- OpenAPI docs: `http://localhost:8000/docs`
+- API docs: `http://localhost:8000/docs`
 
-## Deployment (Free-first strategy)
+## Deployment (Free Tier Friendly)
 
-### Option A (recommended)
+### Recommended production-lite setup
 
 - Frontend: GitHub Pages
 - Backend: Render free web service
-- Database: SQLite for demos, free Postgres for durable production data
+- Data: SQLite for demo use, free Postgres for durable persistence
 
-### Option B
+Detailed guide: [DEPLOYMENT.md](./DEPLOYMENT.md)
 
-- Frontend: GitHub Pages
-- Backend: Oracle Cloud Always Free VM with Docker Compose
+To enable Pages deployment in CI:
 
-See deployment workflow in `.github/workflows/deploy.yml` and set `VITE_API_URL` secret in repository settings.
+1. Set repo variable `ENABLE_PAGES_DEPLOY=true`
+2. Set repo secret `VITE_API_URL` to your backend URL
+3. Keep GitHub Pages configured for GitHub Actions
 
-## Environment Variables
+## Configuration
 
-### Backend
+### Backend env vars
 
-- `DATABASE_URL` (optional): defaults to SQLite `sqlite:///./kronos.db`
-- `CORS_ALLOW_ORIGINS` (optional): comma-separated list, defaults to `*`
+- `DATABASE_URL` optional, default `sqlite:///./kronos.db`
+- `CORS_ALLOW_ORIGINS` comma-separated origins, default `*`
 
-### Frontend
+### Frontend env vars
 
-- `VITE_API_URL`: base URL for backend API
+- `VITE_API_URL` backend base URL
 
-## Project Layout
+## Repository Layout
 
 ```text
 kronos/
@@ -91,21 +116,22 @@ kronos/
   frontend/
     src/
       components/
-      lib/
       pages/
+      lib/
       store/
       types/
   .github/workflows/
   docker-compose.yml
+  DEPLOYMENT.md
   setup.ps1
 ```
 
-## Security Notes
+## Security and Contribution
 
-- Never commit `.env` files, local database files, or dependency caches.
-- Use GitHub repository secrets for deployment credentials and API URLs.
-- Review `SECURITY.md` for reporting and disclosure policy.
+- Security policy: [SECURITY.md](./SECURITY.md)
+- Contribution guide: [CONTRIBUTING.md](./CONTRIBUTING.md)
+- Code of conduct: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 
 ## Keywords
 
-`operating systems` `cpu scheduling` `memory management` `disk scheduling` `deadlock detection` `fastapi` `react` `simulation` `education` `systems design`
+`operating systems` `algorithm visualizer` `cpu scheduling` `page replacement` `disk scheduling` `deadlock detection` `fastapi` `react` `education tooling`
